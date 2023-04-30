@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.primary-btn{
+    @apply bg-[#63ab45] text-white py-2 px-3 rounded-r-box font-medium;
+}
+
+.active{
+    @apply font-medium bg-transparent text-[#63ab45]
+}
