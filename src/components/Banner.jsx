@@ -2,7 +2,7 @@ import React from "react";
 import CardGallery from "./CardGallery";
 const Banner = () => {
   return (
-    <div className="w-full max-w-[1200px] mx-auto md:flex md:items-center h-full text-white">
+    <div className="w-full max-w-[1200px] mx-auto flex md:flex-row flex-col md:items-center justify-center md:justify-normal h-full text-white">
       <div className="">
         <h3 className="text-3xl md:text-5xl font-bold uppercase">
           Cox's Bazar
