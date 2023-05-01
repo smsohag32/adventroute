@@ -1,21 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../shared/Header";
 import BgParticles from "../../components/bgParticles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Register = () => {
+  const { createUser, updateUser, googleLogin, fbLogin } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleLogin = (e) => {
+  // handle user register
+  const handleRegister = (e) => {
     setError("");
     e.preventDefault();
+    const name = e.target.name.value;
     const email = e.target.email.value;
+    const photoData = e.target.photo;
     const password = e.target.password.value;
     const confirm = e.target.confirm.value;
+    console.log(photoData);
+    //  validation
     if (password !== confirm) {
       setError("Your password Not match !!");
     }
+
+    // create user
+    createUser(email, password).then((result) => {
+      const user = result.user;
+      setSuccess("Your account create successful.");
+      navigate("/login");
+      updateUser(name, photo);
+    });
   };
 
   // handle google join
@@ -30,11 +48,11 @@ const Register = () => {
       <Header />
       <div className="w-full max-w-[1200px] flex items-center min-h-[calc(100vh-200px)] mx-auto ">
         <form
-          onSubmit={handleLogin}
+          onSubmit={handleRegister}
           className="card-body md:max-w-[50%] mx-auto  bg-[#444654] bg-opacity-60 p-10 rounded-md shadow-md"
         >
           <h4 className="text-center md:text-4xl mb-2 text-xl font-bold ">
-            Register now !
+            Create an account !
           </h4>
           <div className="form-control">
             <p className="text-warning transition-all transform duration-200 ms-1 py-1">
@@ -68,6 +86,17 @@ const Register = () => {
           </div>
           <div className="form-control">
             <label className="label">
+              <span className="label-text">Upload photo</span>
+            </label>
+            <input
+              type="file"
+              placeholder="password"
+              className="file-input"
+              name="password"
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
               <span className="label-text">Password</span>
             </label>
             <input
@@ -94,7 +123,7 @@ const Register = () => {
             </label>
           </div>
           <div className="form-control mt-4">
-            <button className="btn btn-primary">Login</button>
+            <button className="btn btn-primary">Register</button>
           </div>
           <span className="text-center text-sm">
             Already have an account
